@@ -9,8 +9,8 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt 
 
-img = cv2.imread('3.jpg')
-cv2.imshow("Original Image",img)
+img = cv2.imread('1.jpg')
+#cv2.imshow("Original Image",img)
 
 imgray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 blurring = cv2.GaussianBlur(imgray,(7,7),0)
@@ -32,8 +32,24 @@ print len(accepted_contours)
 
 
 
+
+for i in range(0,thresh.shape[0]):
+	for j in range(0,thresh.shape[1]):
+		if thresh[i][j] < 50:
+			thresh[i][j] = 0
+		else:
+			thresh[i][j] = 255
+
+
+
 for i in range(0,len(accepted_contours)):
-	cv2.drawContours(thresh, accepted_contours, i , (255,255,255),thickness = -1)
+	cv2.drawContours(thresh, accepted_contours, i, (255,255,255),thickness = -1)
+
+	rect = cv2.minAreaRect(accepted_contours[i])
+	box = cv2.boxPoints(rect)
+	box = np.int0(box)
+	im = cv2.drawContours(thresh,[box],0,(255,255,255),1)
+
 
 cv2.imshow('Segmented Image',thresh)
 
@@ -42,12 +58,6 @@ cv2.imshow('Segmented Image',thresh)
 
 
 ## Some Steps needed to perform masking ::: Can be made faster 
-for i in range(0,thresh.shape[0]):
-	for j in range(0,thresh.shape[1]):
-		if thresh[i][j] < 50:
-			thresh[i][j] = 0
-		else:
-			thresh[i][j] = 255
 
 #masking
 result_b = cv2.bitwise_and(img[:,:,0],img[:,:,0],mask=thresh)
@@ -59,9 +69,6 @@ Final_Result[:,:,0] = result_b
 Final_Result[:,:,1] = result_g
 Final_Result[:,:,2] = result_r
 
-
-
-
-
 cv2.imshow("After masking",Final_Result)
 cv2.waitKey(0)
+
