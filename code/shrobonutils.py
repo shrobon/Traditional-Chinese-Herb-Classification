@@ -48,23 +48,6 @@ def perform_masking(img,thresh):
 	Final_Result[:,:,0] = result_b
 	Final_Result[:,:,1] = result_g
 	Final_Result[:,:,2] = result_r
-	'''
-	thresh1 = cv2.bitwise_not(thresh)
-	result_b1 = cv2.bitwise_or(Final_Result[:,:,0],Final_Result[:,:,0],mask=thresh1)
-	result_g1 = cv2.bitwise_or(Final_Result[:,:,0],Final_Result[:,:,0],mask=thresh1)
-	result_r1 = cv2.bitwise_or(Final_Result[:,:,0],Final_Result[:,:,0],mask=thresh1)
-
-	Final_Result[:,:,0] = result_b1
-	Final_Result[:,:,1] = result_g1
-	Final_Result[:,:,2] = result_r1
-	'''
-
 	return Final_Result
 
-def preprocess(image):
-	for i in range(0,image.shape[0]):
-		for j in range(0,image.shape[1]):
-			if image[i][j][:3] < 1:
-				image[i][j][:3] = 255
 
-	return image
