@@ -22,9 +22,6 @@ def find_crucial_contours(img,contour):
 	return accepted_contours
 
 
-
-
-
 def make_binary(thresh):
 	for i in range(0,thresh.shape[0]):
 		for j in range(0,thresh.shape[1]):

@@ -1,0 +1,7 @@
+/home/shrobon/Assignment2/Images/Arecacatechu/ac/
+/home/shrobon/Assignment2/Images/gastrodiaelata/ge/
+/home/shrobon/Assignment2/Images/Ligusticum/Ligusticum/
+/home/shrobon/Assignment2/Images/Liriope/Liriope/
+/home/shrobon/Assignment2/Images/nuxvomica/nv/
+/home/shrobon/Assignment2/Images/Pinelliaternate/pt/
+/home/shrobon/Assignment2/Images/radixcurcumae/rc/
