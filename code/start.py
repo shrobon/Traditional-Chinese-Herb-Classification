@@ -56,11 +56,6 @@ for folder in data:
 
 
 
-
-
-
-
-
 '''
 for i in range(0,len(accepted_contours)):
 	cv2.drawContours(thresh, accepted_contours, i, (255,255,255),thickness = -1)
