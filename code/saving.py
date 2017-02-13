@@ -9,12 +9,13 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt 
 
-img = cv2.imread('1.jpg')
+img = cv2.imread('4.jpg')
 #cv2.imshow("Original Image",img)
 
 imgray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-blurring = cv2.GaussianBlur(imgray,(7,7),0)
-ret,thresh = cv2.threshold(blurring,0,255,cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+#blurring = cv2.GaussianBlur(imgray,(7,7),0)
+ret,thresh = cv2.threshold(imgray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+thresh = cv2.medianBlur(thresh,11)
 (image, contour , _) =  cv2.findContours(thresh,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
 
 image_area = img.shape[0] * img.shape[1]

@@ -31,8 +31,9 @@ for folder in data:
 	for im in imagePaths:
 		img = cv2.imread(im)
 		imgray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-		blurring = cv2.GaussianBlur(imgray,(7,7),0)
-		ret,thresh = cv2.threshold(blurring,0,255,cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+		#blurring = cv2.GaussianBlur(imgray,(7,7),0)
+		ret,thresh = cv2.threshold(imgray,0,255,cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+		thresh = cv2.medianBlur(thresh,11)
 		(image, contour , _) =  cv2.findContours(thresh,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
 
 		accepted_contours= find_crucial_contours(img,contour)
