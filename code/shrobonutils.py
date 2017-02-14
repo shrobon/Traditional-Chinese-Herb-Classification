@@ -15,7 +15,7 @@ def find_crucial_contours(img,contour):
 	image_area = img.shape[0] * img.shape[1]
 	for i in contour:
 		cont_area = cv2.contourArea(i)
-		if cont_area >= 10000 and cont_area <= 0.8 * image_area:
+		if cont_area >= 10000 and cont_area <= 0.8* image_area:
 			arealist.append(cont_area)
 			accepted_contours.append(i)
 
@@ -48,3 +48,14 @@ def perform_masking(img,thresh):
 	return Final_Result
 
 
+def auto_canny(image, sigma=0.33):
+	# compute the median of the single channel pixel intensities
+	v = np.median(image)
+ 
+	# apply automatic Canny edge detection using the computed median
+	lower = int(max(0, (1.0 - sigma) * v))
+	upper = int(min(255, (1.0 + sigma) * v))
+	edged = cv2.Canny(image, lower, upper)
+ 
+	# return the edged image
+	return edged

@@ -8,14 +8,23 @@
 import numpy as np 
 import cv2
 from matplotlib import pyplot as plt 
+from shrobonutils import auto_canny
 
 img = cv2.imread('4.jpg')
-#cv2.imshow("Original Image",img)
+
 
 imgray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-#blurring = cv2.GaussianBlur(imgray,(7,7),0)
-ret,thresh = cv2.threshold(imgray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+blurring = cv2.GaussianBlur(imgray,(7,7),0)
+
+
+
+#thresh = cv2.adaptiveThreshold(blurring,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)
+ret,thresh = cv2.threshold(imgray,0,255,cv2.THRESH_BINARY  | cv2.THRESH_OTSU)
+#thresh = auto_canny(thresh)
+#thresh = cv2.bitwise_not(thresh)
 thresh = cv2.medianBlur(thresh,11)
+
+
 (image, contour , _) =  cv2.findContours(thresh,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
 
 image_area = img.shape[0] * img.shape[1]
@@ -50,7 +59,7 @@ for i in range(0,len(accepted_contours)):
 	im = cv2.drawContours(thresh,[box],0,(255,255,255),1)
 
 	#Strong the bounding box for later use in cropping
-	print rect
+	#print rect
 cv2.imshow('Segmented Image',thresh)
 
 
