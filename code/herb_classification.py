@@ -7,16 +7,18 @@ import cv2
 import glob 
 import numpy as np 
 import warnings
+import cPickle 
 warnings.filterwarnings("ignore")
+
+
 
 path_to_dataset = '/home/shrobon/Assignment2/code/extracted/'
 imagePaths = sorted(glob.glob((path_to_dataset)+'*.jpg'))
-#print imagePaths
+
 data = [] #  I will keep the image info here
 target = []# This will contain the labels
 
 desc = RGBHistograms([8,8,8])
-
 #iterating over each image 
 for i in imagePaths:
 	image = cv2.imread(i)
@@ -36,13 +38,27 @@ for i in imagePaths:
 targetNames = np.unique(target)
 le = LabelEncoder() #This will required to encode the class names
 target = le.fit_transform(target)
-
+print target
 (trainData,testData,trainTarget,testTarget) = train_test_split(data,target,test_size = 0.3, random_state=42)
 
 model = RandomForestClassifier(n_estimators = 25, random_state=84)
 model.fit(trainData,trainTarget)
+print classification_report(testTarget,model.predict(testData),target_names=targetNames)
 
-print(classification_report(testTarget,model.predict(testData),target_names=targetNames))
+
+
+
+
+
+
+#Saving my classifier to disk, so that i can use it later just for prediction
+f = open("model.cpickle","wb")
+f.write(cPickle.dumps(model))
+f.close()
+
+
+
+
 
 
 #I will now test my classification to see how good my classifier works 

@@ -1,5 +1,4 @@
 import cv2
-
 class RGBHistograms:
 	def __init__(self,bins):
 		self.bins = bins
