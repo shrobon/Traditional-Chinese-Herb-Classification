@@ -59,3 +59,17 @@ def auto_canny(image, sigma=0.33):
  
 	# return the edged image
 	return edged
+
+
+def kmeans(image):
+    image=cv2.GaussianBlur(image,(7,7),0)
+    vectorized=image.reshape(-1,3)
+    vectorized=np.float32(vectorized)
+    criteria=(cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER,10, 1.0)
+    # we have a background and a forebround , so number of segments  should be 2, 
+    # that is why i used the parameter as 2
+    ret,label,center=cv2.kmeans(vectorized,2,None,criteria,10,cv2.KMEANS_RANDOM_CENTERS)
+    res = center[label.flatten()]
+    segmented_image = res.reshape((image.shape))
+
+    return label.reshape((image.shape[0],image.shape[1])),segmented_image.astype(np.uint8)
