@@ -59,13 +59,13 @@ f.close()
 
 
 
-
+TestPaths = '/home/shrobon/Assignment2/code/testClassificationImages/'
 
 #I will now test my classification to see how good my classifier works 
 print "Testing the performance of my classifier"
 print "::::::::::::::::::::::::::::::::::::::::"
 test_counter = 0
-for i in np.random.choice(np.arange(0,len(imagePaths)),10):
+for i in np.random.choice(np.arange(0,len(TestPaths)),7):
 	test_counter = test_counter+1
 
 	image = cv2.imread(imagePaths[i])
