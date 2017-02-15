@@ -60,18 +60,23 @@ f.close()
 
 
 TestPaths = '/home/shrobon/Assignment2/code/testClassificationImages/'
+TestImages = sorted(glob.glob((TestPaths)+'*.jpg'))
+
 
 #I will now test my classification to see how good my classifier works 
 print "Testing the performance of my classifier"
 print "::::::::::::::::::::::::::::::::::::::::"
 test_counter = 0
-for i in np.random.choice(np.arange(0,len(TestPaths)),7):
+for i in range(0,len(TestImages)):
 	test_counter = test_counter+1
 
-	image = cv2.imread(imagePaths[i])
+	image = cv2.imread(TestImages[i])
 	feature = desc.describe(image)
 	flower = le.inverse_transform(model.predict(feature))[0]
-	x = imagePaths[i].split('/')
+	
+
+
+	x = TestImages[i].split('/')
 	x = x[len(x)-1][:2]
 	print "Test number    :->{}".format(test_counter)
 	print "Displayed herb :-> {}".format(x.upper()) 
