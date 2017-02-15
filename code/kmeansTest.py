@@ -18,6 +18,11 @@ class Segment:
         return label.reshape((image.shape[0],image.shape[1])),segmented_image.astype(np.uint8)
 
 
+    def extractComponent(self, image,label_image,label):
+       component=np.zeros(image.shape,np.uint8)
+       component[label_image==label]=image[label_image==label]
+       return component
+
 
 if __name__== "__main__":
     import argparse
@@ -35,7 +40,9 @@ if __name__== "__main__":
     else:
 		seg = Segment(args["segments"])
 		label,result = seg.kmeans(image) 
+extracted=seg.extractComponent(image,label,1)
 
 cv2.imshow("input",image)
-cv2.imshow("segmented",result)
+cv2.imshow("segmented",extracted)
+cv2.imshow("result",result)
 cv2.waitKey(0)

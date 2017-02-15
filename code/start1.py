@@ -9,13 +9,12 @@ from shrobonutils import find_crucial_contours, make_binary, perform_masking, km
 import glob
 
 
-with open('testdataset.txt') as file:
+with open('dataset.txt') as file:
 	data = file.read()
 
 data = data.split('\n')	
-
-print data
-
+data = data[:len(data)-1]
+#print data 
 
 for folder in data:
 	print "Folder currently in use %s"%folder
@@ -25,6 +24,8 @@ for folder in data:
 	image_counter = 0 
 
 	name_list = imagePaths[0].split('/')
+	#print name_list
+	#break
 	category_name = name_list[-2]
 
 
@@ -50,10 +51,15 @@ for folder in data:
 			
 			#cropping and writing the image 
 			mask = thresh[y:y+h,x:x+w]
+			#erosion to slightly better the picture at the outlines
+			kernel = np.ones((5,5),np.uint8)
+			erosion = cv2.erode(mask,kernel,iterations = 2)
+
+			##############################################
 			cropped_img= img[y:y+h,x:x+w]
-			Masked = perform_masking(cropped_img,mask)
+			Masked = perform_masking(cropped_img,erosion)
 			#Masked = preprocess(Masked)
-			cv2.imwrite('/home/shrobon/Assignment2/code/testextracted/'+category_name+str(image_counter)+'.jpg',Masked)
+			cv2.imwrite('/home/shrobon/Assignment2/code/extracted/'+category_name+str(image_counter)+'.jpg',Masked)
 
 
 
