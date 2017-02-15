@@ -43,3 +43,13 @@ model.fit(trainData,trainTarget)
 print(classification_report(testTarget,model.predict(testData),target_names=targetNames))
 
 
+#I will now test my classification to see how good my classifier works 
+for i in np.random.choice(np.arange(0,len(imagePaths)),10):
+	image = cv2.imread(imagePaths[i])
+	feature = desc.describe(image)
+
+	flower = le.inverse_transform(model.predict(feature))[0]
+	print imagePaths[i]
+	print "Predicted herb :-> {}".format(flower.upper())
+	cv2.imshow("The herb",image)
+	cv2.waitKey(0)
