@@ -6,6 +6,8 @@ from sklearn.metrics import classification_report
 import cv2
 import glob 
 import numpy as np 
+import warnings
+warnings.filterwarnings("ignore")
 
 path_to_dataset = '/home/shrobon/Assignment2/code/extracted/'
 imagePaths = sorted(glob.glob((path_to_dataset)+'*.jpg'))
@@ -44,12 +46,24 @@ print(classification_report(testTarget,model.predict(testData),target_names=targ
 
 
 #I will now test my classification to see how good my classifier works 
+print "Testing the performance of my classifier"
+print "::::::::::::::::::::::::::::::::::::::::"
+test_counter = 0
 for i in np.random.choice(np.arange(0,len(imagePaths)),10):
+	test_counter = test_counter+1
+
 	image = cv2.imread(imagePaths[i])
 	feature = desc.describe(image)
-
 	flower = le.inverse_transform(model.predict(feature))[0]
-	print imagePaths[i]
+	x = imagePaths[i].split('/')
+	x = x[len(x)-1][:2]
+	print "Test number    :->{}".format(test_counter)
+	print "Displayed herb :-> {}".format(x.upper()) 
 	print "Predicted herb :-> {}".format(flower.upper())
+	if flower == x :
+		print "VERDICT : Correct !!! "
+	else:
+		print "VERDICT : Oops !! i missed it :( sorry "
+	print ":::::::::::::::::::::::::::::::::::::::::::"
 	cv2.imshow("The herb",image)
 	cv2.waitKey(0)
