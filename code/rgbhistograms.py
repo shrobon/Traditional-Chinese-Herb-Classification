@@ -1,3 +1,6 @@
+#Filename : rgbhistograms.py
+#__author__:Shrobon Biswas
+#__Description__ : returns the flattened normalized histogram information
 import cv2
 class RGBHistograms:
 	def __init__(self,bins):

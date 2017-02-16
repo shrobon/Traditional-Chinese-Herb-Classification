@@ -45,4 +45,11 @@ extracted=seg.extractComponent(image,label,1)
 cv2.imshow("input",image)
 cv2.imshow("segmented",extracted)
 cv2.imshow("result",result)
+thresh = cv2.cvtColor(result,cv2.COLOR_BGR2GRAY)
+ret,thresh = cv2.threshold(thresh,0,255,cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+
+cv2.imshow("OTSU",thresh)
+
+
+
 cv2.waitKey(0)

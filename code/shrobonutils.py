@@ -1,3 +1,6 @@
+#__Filename__: shrobonutils.py
+#__author__ : Shrobon Biswas
+#__Desccription__: This file contains the helper functions
 import cv2
 import numpy as np
 
