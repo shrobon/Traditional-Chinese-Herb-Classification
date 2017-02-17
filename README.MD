@@ -54,7 +54,7 @@ python herb_classification.py
 ![alt tag](./testing.png)
 
 ## Usage (**Please Read Carefully !!**)
-TO those who are taking this course, ** please DO NOT copy this content in your assignment** . Instead use this repository as a learning example and try to better your code based on this. You can extend this code and add in your own optimizations that yield a better performance.
+TO those who are taking this course, **please DO NOT copy this content in your assignment** . Instead use this repository as a learning example and try to better your code based on this. You can extend this code and add in your own optimizations that yield a better performance.
 
 ## License
 MIT License
