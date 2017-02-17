@@ -11,7 +11,7 @@
 7. I have stored one herb from each herb class in the folder named testClassificationImages
 8. I use the images mentioned in step 7, to test how well my classifier performs.
 
-Verdict: I have conducted a few experiments and it mostly gets the classification right. 
+Verdict: I have conducted a few experiments and it mostly gets the classification right.
 '''
 from rgbhistograms import RGBHistograms
 from sklearn.preprocessing import LabelEncoder
@@ -19,10 +19,10 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 import cv2
-import glob 
-import numpy as np 
+import glob
+import numpy as np
 import warnings
-import cPickle 
+import cPickle
 warnings.filterwarnings("ignore")
 
 
@@ -39,17 +39,24 @@ desc = RGBHistograms([8,8,8])
 
 
 
-#iterating over each image 
+#iterating over each image
 for i in imagePaths:
 	image = cv2.imread(i)
 	features = desc.describe(image) # a flattened histogram will be returned
 
 	#updating the feature vector
 	data.append(features)
-	
-	#updating the corresponding labels 
+
+	#updating the corresponding labels
 	label = i.split('/')
-	label = label[len(label)-1][:2]
+
+	#Since there are 2 classes beginning with L
+	label = label[len(label)-1]
+	if label[0] == 'L':
+		label = label[:3]
+	else:
+		label = label[:2]
+
 	target.append(label)
 	#print label
 
@@ -75,7 +82,7 @@ f.close()
 
 
 
-#I will now test my classification to see how good my classifier works 
+#I will now test my classification to see how good my classifier works
 TestPaths = '/home/shrobon/Assignment2/code/testClassificationImages/'
 TestImages = sorted(glob.glob((TestPaths)+'*.jpg'))
 
@@ -89,13 +96,17 @@ for i in range(0,len(TestImages)):
 	image = cv2.imread(TestImages[i])
 	feature = desc.describe(image)
 	flower = le.inverse_transform(model.predict(feature))[0]
-	
+
 
 
 	x = TestImages[i].split('/')
-	x = x[len(x)-1][:2]
+	x = x[len(x)-1]
+	if x[0] =='L':
+		x = x[:3]
+	else:
+		x = x[:2]
 	print "Test number    :->{}".format(test_counter)
-	print "Displayed herb :-> {}".format(x.upper()) 
+	print "Displayed herb :-> {}".format(x.upper())
 	print "Predicted herb :-> {}".format(flower.upper())
 	if flower == x :
 		print "VERDICT : Correct !!! "
